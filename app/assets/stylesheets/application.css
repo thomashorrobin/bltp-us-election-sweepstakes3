@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+.gop_highlight {
+    background-color: red;
+}
+
+.dem_highlight {
+    background-color: blue;
+}

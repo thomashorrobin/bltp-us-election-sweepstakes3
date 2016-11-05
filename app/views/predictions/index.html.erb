@@ -18,8 +18,8 @@
     <% @predictions.each do |prediction| %>
       <tr>
         <td><%= prediction.first_name + " " + prediction.last_name %></td>
-        <td><%= prediction.trump_ec_votes %></td>
-        <td><%= prediction.clinton_ec_votes %></td>
+        <td class="<%= 'gop_highlight' if prediction.trump_ec_votes > 269 %>"><%= prediction.trump_ec_votes %></td>
+        <td class="<%= 'dem_highlight' if prediction.clinton_ec_votes > 269 %>"><%= prediction.clinton_ec_votes %></td>
         <td><%= prediction.lockin_datetime.in_time_zone("Auckland").strftime("%e %b %I:%M %p") %></td>
         <td><%= link_to 'Edit', edit_prediction_path(prediction) %></td>
         <td><%= link_to 'Delete', prediction, method: :delete, data: { confirm: 'Are you sure? This deletes it from the database so no going back haha' } %></td>
