@@ -25,6 +25,8 @@ class PredictionsController < ApplicationController
   # POST /predictions.json
   def create
     @prediction = Prediction.new(prediction_params)
+    @prediction.lockin_datetime = DateTime.now
+    @prediction.clinton_ec_votes = 538 - @prediction.trump_ec_votes
 
     respond_to do |format|
       if @prediction.save
@@ -42,6 +44,9 @@ class PredictionsController < ApplicationController
   def update
     respond_to do |format|
       if @prediction.update(prediction_params)
+        @prediction.clinton_ec_votes = 538 - @prediction.trump_ec_votes
+        @prediction.lockin_datetime = DateTime.now
+        @prediction.save
         format.html { redirect_to @prediction, notice: 'Prediction was successfully updated.' }
         format.json { render :show, status: :ok, location: @prediction }
       else
@@ -69,6 +74,7 @@ class PredictionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def prediction_params
-      params.require(:prediction).permit(:first_name, :last_name, :trump_ec_votes, :clinton_ec_votes, :lockin_datetime)
+      # params.require(:prediction).permit(:first_name, :last_name, :trump_ec_votes, :clinton_ec_votes, :lockin_datetime)
+      params.require(:prediction).permit(:first_name, :last_name, :trump_ec_votes)
     end
 end
